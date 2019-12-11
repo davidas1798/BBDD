@@ -1,0 +1,103 @@
+SQL> CREATE TABLE TITULACION
+  2  (T CHAR(4), FAC VARCHAR2(30));
+CREATE TABLE TITULACION
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> INSERT INTO TITULACION(T)
+  2  SELECT DITINCT T
+  3  FROM ASIGNATURA;
+SELECT DITINCT T
+       *
+ERROR at line 2:
+ORA-00904: "DITINCT": invalid identifier 
+
+
+SQL> INSERT INTO TITULACION(T)
+  2  SELECT DISTINCT T
+  3  FROM ASIGNATURA;
+
+4 rows created.
+
+SQL> UPDATE TITULACION
+  2  SET FAC = &facultad
+  3  WHERE T = &titulacion;
+Enter value for facultad: 'FACULTAD DE FISICA'
+old   2: SET FAC = &facultad
+new   2: SET FAC = 'FACULTAD DE FISICA'
+Enter value for titulacion: 'GF'
+old   3: WHERE T = &titulacion
+new   3: WHERE T = 'GF'
+
+1 row updated.
+
+SQL> /
+Enter value for facultad: 'ESIT'
+old   2: SET FAC = &facultad
+new   2: SET FAC = 'ESIT'
+Enter value for titulacion: 'GII'
+old   3: WHERE T = &titulacion
+new   3: WHERE T = 'GII'
+
+1 row updated.
+
+SQL> /
+Enter value for facultad: 'esit'
+old   2: SET FAC = &facultad
+new   2: SET FAC = 'esit'
+Enter value for titulacion: 'MII'
+old   3: WHERE T = &titulacion
+new   3: WHERE T = 'MII'
+
+1 row updated.
+
+SQL> /
+Enter value for facultad: 'FACULTAD DE MATEMATICAS'
+old   2: SET FAC = &facultad
+new   2: SET FAC = 'FACULTAD DE MATEMATICAS'
+Enter value for titulacion: 'GM'
+old   3: WHERE T = &titulacion
+new   3: WHERE T = 'GM'
+
+1 row updated.
+
+SQL> commit work
+  2  ;
+
+Commit complete.
+
+SQL> SELECT * FROM TITULACION;
+
+T    FAC                                                                        
+---- ------------------------------                                             
+GF   FACULTAD DE FISICA                                                         
+GM   FACULTAD DE MATEMATICAS                                                    
+GII  ESIT                                                                       
+MII  esit                                                                       
+
+SQL> CREATE SYNONYM TIT
+  2  FOR TITULACION;
+CREATE SYNONYM TIT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> CREATE SYNONYM TIT
+  2  FOR TITULACION;
+CREATE SYNONYM TIT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> CREATE SYNONYM TIT FOR TITULACION;
+CREATE SYNONYM TIT FOR TITULACION
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> EXIT
